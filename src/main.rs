@@ -11,7 +11,7 @@ use url::{ParseError, Url};
 #[tokio::main]
 async fn main() {
     pretty_env_logger::init();
-    log::info!("Starting VxTwitter Bot...");
+    log::info!("Starting FxTwitter Bot...");
 
     // set bot token here
     // for unix shell: `export TELOXIDE_TOKEN=<Your token here>`
@@ -26,8 +26,8 @@ async fn main() {
             }
             let query_url: Url = query_url.unwrap();
 
-            // vxtwitter.com
-            let vxtwitter = InlineQueryResultArticle::new(
+            // fxtwitter.com
+            let fxtwitter = InlineQueryResultArticle::new(
                 "00".to_string(),
                 "Click to send",
                 InputMessageContent::Text(
@@ -39,7 +39,7 @@ async fn main() {
                     // hyperlink the `zero-width space` for link preview
                     .entities(vec![MessageEntity::new(
                         MessageEntityKind::TextLink {
-                            url: Url::parse(&format!("https://vxtwitter.com{}", query_url.path()))
+                            url: Url::parse(&format!("https://fxtwitter.com{}", query_url.path()))
                                 .unwrap(),
                         },
                         0,
@@ -47,10 +47,10 @@ async fn main() {
                     )]),
                 ),
             )
-            .description(format!("https://vxtwitter.com{}", query_url.path()));
+            .description(format!("https://fxtwitter.com{}", query_url.path()));
 
-            // c.vxtwitter.com (to combine multiple images)
-            let cvxtwitter = InlineQueryResultArticle::new(
+            // c.fxtwitter.com (to combine multiple images)
+            let cfxtwitter = InlineQueryResultArticle::new(
                 "01".to_string(),
                 "Combine multiple images (if any)",
                 InputMessageContent::Text(
@@ -61,7 +61,7 @@ async fn main() {
                     .entities(vec![MessageEntity::new(
                         MessageEntityKind::TextLink {
                             url: Url::parse(&format!(
-                                "https://c.vxtwitter.com{}",
+                                "https://c.fxtwitter.com{}",
                                 query_url.path()
                             ))
                             .unwrap(),
@@ -71,11 +71,11 @@ async fn main() {
                     )]),
                 ),
             )
-            .description(format!("https://c.vxtwitter.com{}", query_url.path()));
+            .description(format!("https://c.fxtwitter.com{}", query_url.path()));
 
             let results = vec![
-                InlineQueryResult::Article(cvxtwitter),
-                InlineQueryResult::Article(vxtwitter),
+                InlineQueryResult::Article(cfxtwitter),
+                InlineQueryResult::Article(fxtwitter),
             ];
 
             let response = bot.answer_inline_query(&q.id, results).send().await;
